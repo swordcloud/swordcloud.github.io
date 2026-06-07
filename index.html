@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sword Cloud — Tecnología para el Bajío</title>
+<meta name="description" content="Desarrollo web profesional y análisis de datos para PyMEs en el Bajío. Celaya, León, Querétaro. Cotización gratuita.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #050d1a;
+    --navy-mid: #0a1628;
+    --navy-light: #0f2040;
+    --blue: #1a6fff;
+    --blue-bright: #3d8bff;
+    --blue-glow: #1a6fff33;
+    --cyan: #00c8ff;
+    --white: #f0f6ff;
+    --white-dim: #8aa4c8;
+    --border: #1a3260;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BG ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 6%;
+    background: rgba(5, 13, 26, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo span { color: var(--blue-bright); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav ul a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--blue-bright) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 6% 5rem;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #1a6fff22 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 700px; position: relative; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    font-weight: 500;
+    margin-bottom: 1.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 .accent { color: var(--blue-bright); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--white-dim);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary:hover {
+    background: var(--blue-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--blue-glow);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .stat-label { font-size: 0.8rem; color: var(--white-dim); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; padding: 6rem 6%; }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--blue-bright);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--white-dim);
+    max-width: 480px;
+    font-size: 1rem;
+    margin-bottom: 3.5rem;
+    font-weight: 300;
+  }
+
+  /* ── SERVICIOS ── */
+  #servicios { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .service-card:hover { border-color: var(--blue); transform: translateY(-4px); }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--blue-glow);
+    border: 1px solid var(--blue);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--white);
+  }
+
+  .service-desc { color: var(--white-dim); font-size: 0.9rem; line-height: 1.6; }
+
+  .service-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 1.2rem; }
+
+  .tag {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--white-dim);
+  }
+
+  /* ── POR QUÉ ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .why-item {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--navy-mid);
+  }
+
+  .why-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--blue-bright);
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .why-title { font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+  .why-desc { color: var(--white-dim); font-size: 0.85rem; }
+
+  /* ── PORTAFOLIO ── */
+  #portafolio { background: var(--navy-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .portfolio-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--navy);
+    transition: all 0.25s;
+  }
+
+  .portfolio-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+  .portfolio-thumb {
+    height: 160px;
+    background: var(--navy-light);
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--border);
+    font-size: 3rem;
+  }
+
+  .portfolio-info { padding: 1.5rem; }
+
+  .portfolio-giro {
+    font-size: 0.72rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .portfolio-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio-desc { color: var(--white-dim); font-size: 0.85rem; }
+
+  /* ── CTA ── */
+  #contacto {
+    text-align: center;
+    background: var(--navy);
+  }
+
+  .cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--navy-mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, #1a6fff18 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-box h2 { margin-bottom: 0.8rem; }
+  .cta-box p { color: var(--white-dim); margin-bottom: 2rem; font-size: 0.95rem; }
+
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+
+  .btn-wa:hover { background: #20bb5a; transform: translateY(-2px); }
+
+  .btn-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white-dim);
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-mail:hover { color: var(--white); border-color: var(--blue); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.82rem;
+    color: var(--white-dim);
+  }
+
+  footer a { color: var(--white-dim); text-decoration: none; }
+  footer a:hover { color: var(--white); }
+
+  /* ── ANIMACIONES ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav ul { display: none; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .cta-box { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">⚔</div>
+    Sword<span>Cloud</span>
+  </a>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/524615XXXXXX?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n%20gratuita" target="_blank" class="nav-cta">Cotización gratis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Bajío · Celaya · León · Querétaro</div>
+    <h1>Tu negocio merece<br>tecnología que<br><span class="accent">sí funciona.</span></h1>
+    <p class="hero-sub">Desarrollo web profesional y análisis de datos para PyMEs en el Bajío. Resultados reales, trato directo, sin rodeos.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/524615XXXXXX?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n%20gratuita" target="_blank" class="btn-primary">
+        💬 Cotización gratuita
+      </a>
+      <a href="#servicios" class="btn-secondary">Ver servicios →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Proyectos en el Bajío</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Enfoque regional</div>
+      </div>
+      <div>
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Costo de cotización</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-label">Lo que hacemos</div>
+  <h2>Servicios diseñados<br>para tu negocio</h2>
+  <p class="section-sub">Tecnología práctica y accesible para empresas que quieren crecer en el mercado digital.</p>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">🌐</div>
+      <div class="service-title">Desarrollo Web Profesional</div>
+      <div class="service-desc">Páginas web rápidas, modernas y optimizadas para que tus clientes te encuentren en Google. Diseño a medida, no templates genéricos.</div>
+      <div class="service-tags">
+        <span class="tag">Landing pages</span>
+        <span class="tag">Sitios corporativos</span>
+        <span class="tag">CMS</span>
+        <span class="tag">E-commerce</span>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">📊</div>
+      <div class="service-title">Análisis de Datos e Información</div>
+      <div class="service-desc">Transformamos tus datos en decisiones. Diseño de bases de datos, reportes, dashboards y gestión de información para que tu empresa opere mejor.</div>
+      <div class="service-tags">
+        <span class="tag">Bases de datos</span>
+        <span class="tag">Dashboards</span>
+        <span class="tag">Reportes</span>
+        <span class="tag">Automatización</span>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">⚙️</div>
+      <div class="service-title">Consultoría Tecnológica</div>
+      <div class="service-desc">¿No sabes qué tecnología necesita tu negocio? Te asesoramos sin compromiso. Diagnóstico digital gratuito para PyMEs del Bajío.</div>
+      <div class="service-tags">
+        <span class="tag">Diagnóstico gratis</span>
+        <span class="tag">Estrategia digital</span>
+        <span class="tag">Soporte</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section id="porque">
+  <div class="section-label">Por qué Sword Cloud</div>
+  <h2>Tecnología local,<br>resultados reales</h2>
+  <p class="section-sub">No somos una agencia de CDMX que no conoce el Bajío. Somos de aquí.</p>
+  <div class="why-grid">
+    <div class="why-item fade-up">
+      <div class="why-num">01</div>
+      <div class="why-title">Conocemos el mercado</div>
+      <div class="why-desc">Trabajamos con empresas industriales y comerciales del corredor Bajío.</div>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-num">02</div>
+      <div class="why-title">Trato directo</div>
+      <div class="why-desc">Hablas con quien hace el trabajo. Sin intermediarios, sin malentendidos.</div>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-num">03</div>
+      <div class="why-title">Precios accesibles</div>
+      <div class="why-desc">Soluciones de calidad sin los costos de una agencia grande.</div>
+    </div>
+    <div class="why-item fade-up">
+      <div class="why-num">04</div>
+      <div class="why-title">Entrega a tiempo</div>
+      <div class="why-desc">Nos comprometemos con fechas reales y las cumplimos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAFOLIO -->
+<section id="portafolio">
+  <div class="section-label">Portafolio</div>
+  <h2>Proyectos que<br>hablan por sí solos</h2>
+  <p class="section-sub">Clientes reales en el Bajío con resultados medibles.</p>
+  <div class="portfolio-grid">
+    <div class="portfolio-card fade-up">
+      <div class="portfolio-thumb">🏭</div>
+      <div class="portfolio-info">
+        <div class="portfolio-giro">Manufactura industrial</div>
+        <div class="portfolio-name">AutoPartes Laja-Bajío S.A. de C.V.</div>
+        <div class="portfolio-desc">Sistema de base de datos relacional para gestión de RH, producción, calidad e inventario. Celaya, Gto.</div>
+      </div>
+    </div>
+    <div class="portfolio-card fade-up">
+      <div class="portfolio-thumb">🏠</div>
+      <div class="portfolio-info">
+        <div class="portfolio-giro">Sector inmobiliario</div>
+        <div class="portfolio-name">RGE Bienes Raíces</div>
+        <div class="portfolio-desc">Sitio web con CMS, panel de administración, sistema de propiedades y seguimiento de visitas. Bajío, Méx.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="cta-box">
+    <div class="section-label" style="text-align:center;">Empecemos</div>
+    <h2>¿Listo para crecer<br>digitalmente?</h2>
+    <p>Diagnóstico digital gratuito para tu empresa. Sin compromiso, sin tecnicismos. Solo dinos qué necesitas.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/524615XXXXXX?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n%20gratuita" target="_blank" class="btn-wa">
+        💬 WhatsApp
+      </a>
+      <a href="mailto:swordclouda@gmail.com" class="btn-mail">
+        ✉ swordclouda@gmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 Sword Cloud · Celaya, Guanajuato, México</div>
+  <div>
+    <a href="mailto:swordclouda@gmail.com">swordclouda@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
